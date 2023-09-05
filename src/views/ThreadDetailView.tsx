@@ -101,6 +101,7 @@ const ThreadDetailView = () => {
       {
         currentThread &&
         <div key={currentThread.id}>
+          <p>Category: {currentThread.category}</p>
           <p>{currentThread.title}</p>
           <p>{currentThread.description}</p>
         </div>
