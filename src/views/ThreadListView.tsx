@@ -71,7 +71,6 @@ const ThreadListView = () => {
   
 
   return (
-
     <div className="thread-list">
       <h1 className='thread-heading'>Start Chatting</h1>
       {threads.map((thread) => (
@@ -79,7 +78,6 @@ const ThreadListView = () => {
           <div className="thread-item">
             <p>{thread.title}</p>
           </div>
-
         </Link>
       ))}
         

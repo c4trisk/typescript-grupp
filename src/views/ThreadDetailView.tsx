@@ -158,45 +158,74 @@ const ThreadDetailView = () => {
   
 
   return (
-    <>
-      {
-        currentThread &&
-        <div key={currentThread.id}>
-          <p>Category: {currentThread.category}</p>
-          <p>{currentThread.title}</p>
+    <div className="thread-detail-view">
+      {currentThread && (
+        <div className="thread-content">
+          <p className="thread-heading-category">Category: {currentThread.category}</p>
+          <p className='thread-title'>{currentThread.title}</p>
           <p>{currentThread.description}</p>
-          <button onClick={handleDeleteThread}>Delete Thread</button>
-          <button onClick={() => setShowUpdateForm(state => !state)}>Update Thread</button>
-          
-          { showUpdateForm && <form onSubmit={handleUpdateThread}>
-            <label htmlFor="title">Title</label>
-            <input type="text" id='title' name="title" value={updatedTitle} onChange={(e) => setUpdatedTitle(e.target.value)} />
-            <label htmlFor="description">Description</label>
-            <textarea name="description" id='description' value={updatedDescription} onChange={(e) => setUpdatedDescription(e.target.value)}></textarea>
-            <button>Save Update</button>
-          </form>}
-        </div>
-      }
-      <h2>Comments:</h2>
-      { currentThread && currentThread.comments.map(comment => (
-        <div key={comment.id}>
-          <p>{comment.content}</p>
-          <button onClick={() => handleDeleteComment(comment.id)}>Delete Comment</button>
-        </div>
-      )) }
+          <button className="thread-button" onClick={handleDeleteThread}>
+            Delete Thread
+          </button>
+          <button
+            className="thread-button"
+            onClick={() => setShowUpdateForm((state) => !state)}
+          >
+            Update Thread
+          </button>
 
-      <h2>Add a new comment:</h2>
-      <form onSubmit={handleSubmit}>
-        <textarea 
-          name="content" 
-          placeholder='Write a comment here...' 
-          value={comment.content} 
+          {showUpdateForm && (
+            <form className="thread-form" onSubmit={handleUpdateThread}>
+              <label htmlFor="title">Title</label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                value={updatedTitle}
+                onChange={(e) => setUpdatedTitle(e.target.value)}
+              />
+              <label htmlFor="description">Description</label>
+              <textarea
+                name="description"
+                id="description"
+                value={updatedDescription}
+                onChange={(e) => setUpdatedDescription(e.target.value)}
+              ></textarea>
+              <button className="thread-button">Save Update</button>
+            </form>
+          )}
+        </div>
+      )}
+      <div className="comment-container">
+      <h2 className="thread-heading-comment">Comments:</h2>
+      {currentThread &&
+        currentThread.comments.map((comment) => (
+          <div key={comment.id} className="comment">
+            <p>{comment.content}</p>
+            <button
+              className="comment-button"
+              onClick={() => handleDeleteComment(comment.id)}
+            >
+              Delete Comment
+            </button>
+          </div>
+        ))}
+
+      <h2 className="thread-heading-add">Add a new comment:</h2>
+      <form className="comment-form" onSubmit={handleSubmit}>
+        <textarea
+          name="content"
+          placeholder="Write a comment here..."
+          value={comment.content}
           onChange={handleChange}
         ></textarea>
-        <button type='submit'>Submit</button>
+        <button className="thread-button" type="submit">
+          Submit
+        </button>
       </form>
-    </>
-  )
-}
+      </div>
+    </div>
+  );
+};
 
-export default ThreadDetailView
+export default ThreadDetailView;
