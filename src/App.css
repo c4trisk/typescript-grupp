@@ -2,6 +2,8 @@
 body {
     background-image: linear-gradient(to left, #553c9a, #b393d3);
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    /* display: flex; */
+   
 }
 /* Navbar container */
 .navbar {
@@ -27,6 +29,7 @@ body {
     color: #fdfdfe;
     text-shadow: 0px 0px 5px #b393d3, 0px 0px 10px #b393d3, 0px 0px 10px #b393d3,
       0px 0px 20px #b393d3;
+    /* width: 100vh; */
   
     
   }
@@ -91,4 +94,211 @@ body {
     left: 40%;
     align-self: center;
     margin-top: 3rem;
+    background-repeat: no-repeat;
   }
+
+  /* CreateThread form container */
+.create-thread{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.create-thread-form {
+    background-color: #ffffff transparent 0.5;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px #b393d3, 0px 0px 10px #b393d3, 0px 0px 10px #b393d3,
+    0px 0px 20px #b393d3;
+    max-width: 900px;
+    align-items: center;
+    margin-top: 5rem;
+    
+  }
+  
+  /* Form elements */
+  .create-thread-form label {
+    font-weight: bold;
+    margin-bottom: 1rem;
+    display: block;
+    color: #ffffff;
+    
+  }
+  
+  .create-thread-form select,
+  .create-thread-form input[type="text"],
+  .create-thread-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+  }
+  
+  .create-thread-form button[type="submit"] {
+    
+    background-color: #8424e4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .create-thread-form button[type="submit"]:hover {
+    background-color: #b393d3;
+  }
+  
+  /* ThreadDetailView container */
+.thread-detail-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-image: linear-gradient(to left, #553c9a, #b393d3);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #fdfdfe;
+    /* text-shadow: 0px 0px 5px #b393d3, 0px 0px 10px #b393d3, 0px 0px 10px #b393d3, 0px 0px 20px #b393d3; */
+  }
+  
+  /* ThreadDetailView content container */
+  .thread-content {
+    background-color: rgba(255, 255, 255, 0.9) transparent;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px #b393d3, 0px 0px 10px #b393d3, 0px 0px 10px #b393d3, 0px 0px 20px #b393d3;
+    max-width: 800px; /* Adjust as needed */
+    width: 100%;
+    margin-top: 4rem;
+  }
+  
+  /* ThreadDetailView headings */
+  .thread-heading-comment {
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 2rem;
+    color: #fff;
+  }
+  .thread-heading-category{
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #4b4a4a;
+  }
+
+  .thread-heading-add {
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 2rem;
+    color: #fff;
+  }
+
+  .thread-title{
+    font-size: 25px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #fff;
+    font-weight: 600;
+    /* text-decoration: underline; */
+  }
+
+
+  
+  /* ThreadDetailView buttons */
+  .thread-button {
+    background-color: #8424e4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: 2rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .thread-button:hover {
+    background-color: #b393d3;
+  }
+  
+  /* Comment styles */
+  .comment {
+    /* background-color: rgba(255, 255, 255, 0.9) ; */
+    background-color: rgb(200, 179, 219);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px 0;
+    width: 100%;
+    box-shadow: 0px 0px 5px #b393d3, 0px 0px 10px #b393d3, 0px 0px 10px #b393d3, 0px 0px 20px #b393d3;
+  }
+  
+  .comment p {
+    font-size: 15px;
+    color: #333;
+    padding: 0;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Comment delete button */
+  .comment-button {
+    background-color: #d32923;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .comment-button:hover {
+    background-color: #b393d3;
+  }
+  
+  /* Comment form */
+  .comment-form {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc transparent 0.5;
+    border-radius: 3px;
+    font-size: 16px;
+  }
+  
+  .comment-form button[type="submit"] {
+    background-color: #8424e4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    
+  }
+  
+  .comment-form button[type="submit"]:hover {
+    background-color: #b393d3;
+  }
+
+  /* Comments and comment form container */
+.comment-container {
+    width: 800px; 
+    margin: 2rem auto; 
+    padding: 20px; 
+    background-color: rgba(185, 157, 203, 0.9) transparent; 
+    border-radius: 5px; 
+    box-shadow: 0px 0px 5px #b393d3, 0px 0px 10px #b393d3, 0px 0px 10px #b393d3, 0px 0px 20px #b393d3;
+  }
+  
+  

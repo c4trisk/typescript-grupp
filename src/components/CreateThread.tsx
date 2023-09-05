@@ -76,7 +76,8 @@ const CreateThread = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div className="create-thread">
+    <form className='create-thread-form' onSubmit={handleSubmit}>
       <label htmlFor="category">Category:</label>
       <select 
         id="category" 
@@ -102,6 +103,7 @@ const CreateThread = () => {
       ></textarea>
       <button type="submit">Submit</button>
     </form>
+    </div>
   )
 }
 
