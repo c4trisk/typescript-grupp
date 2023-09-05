@@ -9,6 +9,10 @@ import { Comment, Thread } from '../interfaces/Interfaces';
 const ThreadDetailView = () => {
 
   const [threads, setThreads] = useState<Thread[]>([])
+  const [updatedTitle, setUpdatedTitle] = useState('');
+  const [updatedDescription, setUpdatedDescription] = useState('');
+  const [showUpdateForm, setShowUpdateForm] = useState<boolean>(false)
+
   const navigate = useNavigate()
 
   // getting threads from local storage
@@ -32,6 +36,7 @@ const ThreadDetailView = () => {
 
   // Using param id to find thread with the same id in our threads array
   const currentThread: Thread | undefined = threads.find((item: Thread) => item.id === newId);
+
 
 
   const [comment, setComment] = useState<Comment>({
@@ -118,8 +123,38 @@ const ThreadDetailView = () => {
 
       setThreads(newData)
     }
-
   }
+
+   // Function to handle updating the thread
+   const handleUpdateThread = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (currentThread) {
+      // Find the index of the current thread in the threads array
+      const threadIndex = threads.findIndex((thread) => thread.id === currentThread.id);
+
+      if (threadIndex !== -1) {
+        // Create a copy of the current thread with updated title and description
+        const updatedThread = {
+          ...currentThread,
+          title: updatedTitle,
+          description: updatedDescription,
+        };
+
+        // Create a copy of the threads array with the updated thread
+        const updatedThreads = [...threads];
+        updatedThreads[threadIndex] = updatedThread;
+
+        // Update the data in local storage with the modified array
+        localStorage.setItem('formData', JSON.stringify(updatedThreads));
+
+        // Reset the form and hide the update form
+        setUpdatedTitle('');
+        setUpdatedDescription('');
+        setShowUpdateForm(false);
+        navigate('/')
+      }
+    }
+  };
   
 
   return (
@@ -131,6 +166,15 @@ const ThreadDetailView = () => {
           <p>{currentThread.title}</p>
           <p>{currentThread.description}</p>
           <button onClick={handleDeleteThread}>Delete Thread</button>
+          <button onClick={() => setShowUpdateForm(state => !state)}>Update Thread</button>
+          
+          { showUpdateForm && <form onSubmit={handleUpdateThread}>
+            <label htmlFor="title">Title</label>
+            <input type="text" id='title' name="title" value={updatedTitle} onChange={(e) => setUpdatedTitle(e.target.value)} />
+            <label htmlFor="description">Description</label>
+            <textarea name="description" id='description' value={updatedDescription} onChange={(e) => setUpdatedDescription(e.target.value)}></textarea>
+            <button>Save Update</button>
+          </form>}
         </div>
       }
       <h2>Comments:</h2>
