@@ -4,6 +4,8 @@ import ThreadListView from './views/ThreadListView'
 import ThreadDetailView from './views/ThreadDetailView'
 import ThreadCreationView from './views/ThreadCreationView'
 import Navbar from './components/Navbar'
+// import Lottie from 'lottie-web'
+// import animation from './lotties/chat-bot.json'
 
 function App() {
 
