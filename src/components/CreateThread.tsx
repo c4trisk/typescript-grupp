@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import { Thread } from '../interfaces/Interfaces';
+import { useNavigate } from 'react-router-dom';
 
 
 const CreateThread = () => {
+
+  const navigate = useNavigate()
 
   const [formData, setFormData] = useState<Thread>({
     id: Math.floor(Math.random() * 10000) - 1,
@@ -50,6 +53,10 @@ const CreateThread = () => {
 
     // Save the updated data back to localStorage
     localStorage.setItem('formData', JSON.stringify(updatedData));
+    
+    setTimeout(() => {
+      navigate('/details/' + formData.id)    
+    }, 1000);
 
      // Clear the form or reset the formData state as needed
     setFormData({
@@ -65,6 +72,7 @@ const CreateThread = () => {
       },
       comments: []
     });
+
   };
 
   return (

@@ -57,8 +57,8 @@ const ThreadListView = () => {
   return (
     <div>
       {threads.map(thread => (
-        <Link to={`/details/${thread.id}`}> 
-          <p key={thread.id}>{thread.title}</p>
+        <Link to={`/details/${thread.id}`} key={thread.id}> 
+          <p>{thread.title}</p>
         </Link>
       ))}
     </div>

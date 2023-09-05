@@ -1,7 +1,7 @@
 // Tråddetaljer, lista över kommentarer, skapa ny kommentarer
 
 import { useEffect, useState,  } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Comment, Thread } from '../interfaces/Interfaces';
 
 
@@ -9,6 +9,15 @@ import { Comment, Thread } from '../interfaces/Interfaces';
 const ThreadDetailView = () => {
 
   const [threads, setThreads] = useState<Thread[]>([])
+  const navigate = useNavigate()
+
+  // getting threads from local storage
+  useEffect(() => {
+    const savedData = localStorage.getItem('formData');
+    if (savedData) {
+      setThreads(JSON.parse(savedData))
+    }
+  }, []);
 
   const { id } = useParams();
   let newId: number;
@@ -36,24 +45,14 @@ const ThreadDetailView = () => {
     },
   })
   
-  
-  
-  // getting threads from local storage
-  useEffect(() => {
-    const savedData = localStorage.getItem('formData');
-    if (savedData) {
-      setThreads(JSON.parse(savedData))
-    }
-  }, []);
 
-
-  // Handle form change
+  //* Handle form change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setComment({ ...comment, [name]: value });
   };
   
-  // Handle Form Submit
+  //* Handle Form Submit
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -94,6 +93,24 @@ const ThreadDetailView = () => {
       })
     }
   } 
+
+  const handleDeleteThread = () => {
+
+    // Filter out the object to delete from the array
+    if(currentThread) {
+      const newThreads = threads.filter(item => item.id !== currentThread.id);
+      
+      // Update the data in local storage with the modified array
+      localStorage.setItem('formData', JSON.stringify(newThreads)); // Replace with your storage key
+
+      navigate('/')
+    }
+  }
+
+  const handleDeleteComment = (e:React.MouseEvent<HTMLButtonElement>) => {
+
+
+  }
   
 
   return (
@@ -103,11 +120,15 @@ const ThreadDetailView = () => {
         <div key={currentThread.id}>
           <p>{currentThread.title}</p>
           <p>{currentThread.description}</p>
+          <button onClick={handleDeleteThread}>Delete Thread</button>
         </div>
       }
       <h2>Comments:</h2>
       { currentThread && currentThread.comments.map(comment => (
-        <p key={comment.id}>{comment.content}</p>
+        <div key={comment.id}>
+          <p>{comment.content}</p>
+          <button onClick={handleDeleteComment}>Delete Comment</button>
+        </div>
       )) }
 
       <h2>Add a new comment:</h2>
