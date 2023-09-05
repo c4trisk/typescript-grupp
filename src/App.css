@@ -1,0 +1,33 @@
+/* Navbar container */
+.navbar {
+    /* background-color: #0078d4; */
+    background-image: linear-gradient(to left, #553c9a, #b393d3);
+    color: transparent;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px ;
+  }
+  
+  /* Navbar links */
+  .nav-link {
+    /* color: white; */
+    text-decoration: none;
+    font-size: 25px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    /* font-size: 70px; */
+    font-weight: 600;
+    color: #fdfdfe;
+    text-shadow: 0px 0px 5px #b393d3, 0px 0px 10px #b393d3, 0px 0px 10px #b393d3,
+      0px 0px 20px #b393d3;
+  
+    
+  }
+  
+  .nav-link:hover {
+    text-decoration: underline;
+  } 
+  
