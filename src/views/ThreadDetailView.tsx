@@ -1,7 +1,7 @@
 // Tråddetaljer, lista över kommentarer, skapa ny kommentarer
 
 import { useEffect, useState,  } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Comment, Thread } from '../interfaces/Interfaces';
 
 
@@ -9,6 +9,19 @@ import { Comment, Thread } from '../interfaces/Interfaces';
 const ThreadDetailView = () => {
 
   const [threads, setThreads] = useState<Thread[]>([])
+  const [updatedTitle, setUpdatedTitle] = useState('');
+  const [updatedDescription, setUpdatedDescription] = useState('');
+  const [showUpdateForm, setShowUpdateForm] = useState<boolean>(false)
+
+  const navigate = useNavigate()
+
+  // getting threads from local storage
+  useEffect(() => {
+    const savedData = localStorage.getItem('formData');
+    if (savedData) {
+      setThreads(JSON.parse(savedData))
+    }
+  }, []);
 
   const { id } = useParams();
   let newId: number;
@@ -25,6 +38,7 @@ const ThreadDetailView = () => {
   const currentThread: Thread | undefined = threads.find((item: Thread) => item.id === newId);
 
 
+
   const [comment, setComment] = useState<Comment>({
     id: 0,
     thread: currentThread ? currentThread.id : 0, // if there is a currentThread - Use the ID of the thread to associate the comment with the thread - otherwise 0
@@ -36,24 +50,14 @@ const ThreadDetailView = () => {
     },
   })
   
-  
-  
-  // getting threads from local storage
-  useEffect(() => {
-    const savedData = localStorage.getItem('formData');
-    if (savedData) {
-      setThreads(JSON.parse(savedData))
-    }
-  }, []);
 
-
-  // Handle form change
+  //* Handle form change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setComment({ ...comment, [name]: value });
   };
   
-  // Handle Form Submit
+  //* Handle Form Submit
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -94,6 +98,63 @@ const ThreadDetailView = () => {
       })
     }
   } 
+
+  const handleDeleteThread = () => {
+
+    // Filter out the object to delete from the array
+    if(currentThread) {
+      const newThreads = threads.filter(item => item.id !== currentThread.id);
+      
+      // Update the data in local storage with the modified array
+      localStorage.setItem('formData', JSON.stringify(newThreads)); // Replace with your storage key
+
+      navigate('/')
+    }
+  }
+
+  const handleDeleteComment = (commentId: number) => {
+
+    if(currentThread) {
+      currentThread.comments = currentThread.comments.filter(comment => comment.id !== commentId)
+
+      const newData = threads.map(thread => thread.id === currentThread.id ? currentThread : thread)
+
+      localStorage.setItem('formData', JSON.stringify(newData))
+
+      setThreads(newData)
+    }
+  }
+
+   // Function to handle updating the thread
+   const handleUpdateThread = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (currentThread) {
+      // Find the index of the current thread in the threads array
+      const threadIndex = threads.findIndex((thread) => thread.id === currentThread.id);
+
+      if (threadIndex !== -1) {
+        // Create a copy of the current thread with updated title and description
+        const updatedThread = {
+          ...currentThread,
+          title: updatedTitle,
+          description: updatedDescription,
+        };
+
+        // Create a copy of the threads array with the updated thread
+        const updatedThreads = [...threads];
+        updatedThreads[threadIndex] = updatedThread;
+
+        // Update the data in local storage with the modified array
+        localStorage.setItem('formData', JSON.stringify(updatedThreads));
+
+        // Reset the form and hide the update form
+        setUpdatedTitle('');
+        setUpdatedDescription('');
+        setShowUpdateForm(false);
+        navigate('/')
+      }
+    }
+  };
   
 
   return (
@@ -104,11 +165,24 @@ const ThreadDetailView = () => {
           <p>Category: {currentThread.category}</p>
           <p>{currentThread.title}</p>
           <p>{currentThread.description}</p>
+          <button onClick={handleDeleteThread}>Delete Thread</button>
+          <button onClick={() => setShowUpdateForm(state => !state)}>Update Thread</button>
+          
+          { showUpdateForm && <form onSubmit={handleUpdateThread}>
+            <label htmlFor="title">Title</label>
+            <input type="text" id='title' name="title" value={updatedTitle} onChange={(e) => setUpdatedTitle(e.target.value)} />
+            <label htmlFor="description">Description</label>
+            <textarea name="description" id='description' value={updatedDescription} onChange={(e) => setUpdatedDescription(e.target.value)}></textarea>
+            <button>Save Update</button>
+          </form>}
         </div>
       }
       <h2>Comments:</h2>
       { currentThread && currentThread.comments.map(comment => (
-        <p key={comment.id}>{comment.content}</p>
+        <div key={comment.id}>
+          <p>{comment.content}</p>
+          <button onClick={() => handleDeleteComment(comment.id)}>Delete Comment</button>
+        </div>
       )) }
 
       <h2>Add a new comment:</h2>
