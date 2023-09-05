@@ -107,8 +107,17 @@ const ThreadDetailView = () => {
     }
   }
 
-  const handleDeleteComment = (e:React.MouseEvent<HTMLButtonElement>) => {
+  const handleDeleteComment = (commentId: number) => {
 
+    if(currentThread) {
+      currentThread.comments = currentThread.comments.filter(comment => comment.id !== commentId)
+
+      const newData = threads.map(thread => thread.id === currentThread.id ? currentThread : thread)
+
+      localStorage.setItem('formData', JSON.stringify(newData))
+
+      setThreads(newData)
+    }
 
   }
   
@@ -128,7 +137,7 @@ const ThreadDetailView = () => {
       { currentThread && currentThread.comments.map(comment => (
         <div key={comment.id}>
           <p>{comment.content}</p>
-          <button onClick={handleDeleteComment}>Delete Comment</button>
+          <button onClick={() => handleDeleteComment(comment.id)}>Delete Comment</button>
         </div>
       )) }
 
