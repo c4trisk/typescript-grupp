@@ -1,6 +1,22 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Thread } from '../interfaces/Interfaces';
+import lottie from 'lottie-web';
+
+const animationContainer = document.getElementById('lottie-container');
+
+if (animationContainer) {
+  const animation = lottie.loadAnimation({
+    container: animationContainer, // DOM element to render the animation
+    renderer: 'svg', // You can change this to 'canvas' if you prefer
+    loop: true,
+    autoplay: true,
+    path: 'https://lottie.host/f41dec40-cb63-44b4-a673-6ab2928c995a/yOGdkADpab.json', // URL to your Lottie JSON file
+  });
+  animation.play();
+}
+
+
 
 // Lista över alla trådar
 const ThreadListView = () => {
@@ -55,14 +71,21 @@ const ThreadListView = () => {
   
 
   return (
-    <div>
-      {threads.map(thread => (
-        <Link to={`/details/${thread.id}`} key={thread.id}> 
-          <p>{thread.title}</p>
+
+    <div className="thread-list">
+      <h1 className='thread-heading'>Start Chatting</h1>
+      {threads.map((thread) => (
+        <Link to={`/details/${thread.id}`} key={thread.id} className="thread-link">
+          <div className="thread-item">
+            <p>{thread.title}</p>
+          </div>
+
         </Link>
       ))}
+        
+      
     </div>
-  )
-}
+  );
+};
 
 export default ThreadListView
